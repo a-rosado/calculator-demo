@@ -1,4 +1,4 @@
-let equalPressed = false;
+let prevResult = 0;
 const buttonInput = document.querySelectorAll('.input-button');
 const input = document.getElementById('input');
 const equal = document.getElementById('equal');
@@ -11,30 +11,26 @@ window.onload = () => {
 
 Array.from(buttonInput).forEach((button) => {
   button.addEventListener('click', () => {
-    if (equalPressed) {
-      input.value = '';
-      equalPressed = false;
-    }
     input.value += button.value;
   });
 });
 
 equal.addEventListener('click', () => {
-  equalPressed = true;
   const inputValue = input.value;
   try {
     const solution = eval(inputValue);
     input.value = Number.isInteger(solution) ? solution : solution.toFixed(2);
+    prevResult = solution;
   } catch (error) {
-    alert('You cant do that stupid');
+    alert('Invalid input');
   }
 });
 
 clear.addEventListener('click', () => {
   input.value = '';
-  equalPressed = false;
 });
 
 del.addEventListener('click', () => {
   input.value = input.value.slice(0, -1);
 });
+
